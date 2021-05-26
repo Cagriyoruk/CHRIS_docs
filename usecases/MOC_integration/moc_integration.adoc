@@ -13,6 +13,7 @@ This document describes the steps that are required to get ChRIS with `pfcon` an
 . xref:#running-test-scripts-on-openshift[Running Test Scripts on Openshift]
 . xref:#additional-step-building-a-local-openshift-cluster-via-crc[(Additional Step) Building a Local Openshift Cluster via CRC]
 . xref:#alternative-way-building-a-local-openshift-cluster-via-openshift-origin[(Alternative Way) Building a Local Openshift Cluster via OpenShift Origin]
+. xref:#power9-cluster-ongoing-progress[Power9 Cluster]
 . xref:#feedback-and-future-work[Feedback and Future Work]
 
 == Registering to Mass Open Cloud
@@ -658,6 +659,9 @@ $ sudo vim ./openshift.local.clusterup/kubedns/resolv.conf
 
 Find the nameserver line, and change it to `8.8.8.8` (Google's DNS server). Start the cluster.
 
+== Power9 Cluster (Ongoing Progress)
+
+Power9 is a architecture that is heavy on compute. You might want to use this cluster if you are planning to run heavy applications such as machine learning models. The deployment of `pfcon` and `pman` is pretty similiar to `x86` however, you need images that are built for `linux/ppc64le` which means that you need to build images for specifically for this. You can learn more about building multiarch images here -> https://github.com/FNNDSC/cookiecutter-chrisapp/wiki/Multi-Architectural-Images[Multi-Arch builds]. The current images that I'm using and still is under devleopment is: `cagriyoruk/pfcon:flaskP9` and `cagriyoruk/pman:flaskP9`.
 
 == Troubleshoot Errors
 
