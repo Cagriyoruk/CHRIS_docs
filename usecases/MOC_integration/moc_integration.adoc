@@ -13,6 +13,7 @@ This document describes the steps that are required to get ChRIS with `pfcon` an
 . xref:#running-test-scripts-on-openshift[Running Test Scripts on Openshift]
 . xref:#additional-step-building-a-local-openshift-cluster-via-crc[(Additional Step) Building a Local Openshift Cluster via CRC]
 . xref:#alternative-way-building-a-local-openshift-cluster-via-openshift-origin[(Alternative Way) Building a Local Openshift Cluster via OpenShift Origin]
+. xref:#feedback-and-future-work[Feedback and Future Work]
 
 == Registering to Mass Open Cloud
 
@@ -402,7 +403,7 @@ Set-Cookie: 8f72863408ccaf75ef5904d263aa663f=6b2c25e4b707fd5a818643eecefe12d7; p
 ["arabic", start=2]
 . Test `pfcon`
 
-Create a folder /tmp/small & add some files above 100KB to that folder first. Then run the below script to run a job.
+Create a folder /tmp/small & add some files above 100KB to that folder first. Then run the below script to run a job. A simple dataset of `.mgz` files can be found here -> https://github.com/FNNDSC/mgz_converter_dataset[mgz_converter_dataset].
 
 ....
 # $ ./post_pfcon_ds <pfcon-route> <job-id>
@@ -439,7 +440,6 @@ Done
 We can see that the containers are created in the `Openstack` environment.
 
 image::https://github.com/Cagriyoruk/CHRIS_docs/blob/master/images/mpc/Pfcon-Output.png[Pfcon Output]
-
 
 
 == (Additional Step) Building a Local Openshift Cluster via CRC
@@ -684,3 +684,21 @@ If you're getting an HTTP 401 error, there are couple things you can do.
 === HTTP 409 Conflict
 
 If your getting a HTTP 409 error, it's likely that you already have a same jid(job id). Check Openshift storage to see if there are existing persistent storage. If yes, you can delete it and run the application again.
+
+== Feedback and Future Work
+
+This is my feedback about working on both x86 and power9 openshift cluster over a certain period of time.
+
+=== X86 Progress and Updates
+
+    . MOC integartion document provided a quicker onboarding experience for new student teams.
+    . We were able to test/deploy ChRIS services and plugins as long as the cluster was available.
+    . The only issue that I've and the student teams encountered is the docker pulling limit. This still needs some attention considering more and more people are joining the project. Creating a pull secret doesn't work since the service accounts `builder` and `deployer` are using the default kubernetes/dockercfg secret. There should be a way to use docker credentials to modify the `builder` and the `deployer` so that we can't prevent having the pulling limit at some certain point.
+
+
+=== P9 Openshift Progress
+
+    . Most of the time it's unavailable. We have to create a ticket every time we can't access it.
+    . The time I had access to it, I deployed a ppc64le version of pfcon and pman. The logs of the deployment looked fine.
+    . When I run a ChRIS plugin on P9 openshift, the plugin wasn't getting executed because the pod wasn't getting bounded to a shared persistent volume.
+    . The next step is seeing if the containers are being created in Openstack environment after executing the plugin.
